@@ -1,0 +1,14 @@
+#!/bin/sh
+
+yarn
+
+npmrc=$(cat ~/.npmrc| base64)
+export REPO= // Прописать путь до REPO
+
+# cd ./build
+
+export DOCKER_TAG=$REPO:latest
+docker build -f ./build/Dockerfile --build-arg "NPMRC=$npmrc" --tag "$DOCKER_TAG" .
+docker push $DOCKER_TAG
+
+#./deploy.sh latest dev
